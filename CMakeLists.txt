@@ -22,7 +22,7 @@ catkin_package(
 
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS} /include
 )
 
 add_executable(velocity_restriction src/velocity_restriction.cpp)

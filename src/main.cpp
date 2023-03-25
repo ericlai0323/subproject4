@@ -1,14 +1,26 @@
-#include "../include/velocity_restriction.h"
-#include "../include/kalman_filter.h"
+#include "velocity_restriction.h"
+#include "kalman_filter.h"
 
 int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "CommandVelocityCorrectionPublilsher");
     ros::NodeHandle n;
     ros::NodeHandle nh_priv("~");
+    /* param_type */ /* param_name */;
+    bool UseKalmanFilter = false;
+    double MinLinearVelocityX = 0.5;
+    double MinAngularVelocityZ = 0.1;
+    nh_priv.getParam("UseKalmanFilter", UseKalmanFilter);
+    nh_priv.getParam("MinLinearVelocityX", MinLinearVelocityX);
+    nh_priv.getParam("MinAngularVelocityZ", MinAngularVelocityZ);
+
     CommandVelocityRestriction CommandVelocityRestrictor;
-    ros::Subscriber CommandVelocitySubsriber = n.subscribe("cmd_vel", 200, &CommandVelocityRestriction::CommandVelocityCallBack, &CommandVelocityRestrictor);
-    ros::Publisher CommandVelocityRestrictPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel/correct", 200);
+
+    CommandVelocityRestrictor.MinLinearVelocityX = MinLinearVelocityX;
+    CommandVelocityRestrictor.MinAngularVelocityZ = MinAngularVelocityZ;
+
+    ros::Subscriber CommandVelocitySubsriber = n.subscribe("/cmd_vel", 200, &CommandVelocityRestriction::CommandVelocityCallBack, &CommandVelocityRestrictor);
+    ros::Publisher CommandVelocityRestrictPublisher = n.advertise<geometry_msgs::Twist>("/cmd_vel/correct", 200);
 
     // ros::Rate loop_rate(50); // publish rate of 50 Hz
 

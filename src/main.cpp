@@ -6,10 +6,12 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "CommandVelocityCorrectionPublilsher");
     ros::NodeHandle n;
     ros::NodeHandle nh_priv("~");
-    /* param_type */ /* param_name */;
+
+    // Read parameters and initialize 
     bool UseKalmanFilter = false;
     double MinLinearVelocityX = 0.5;
     double MinAngularVelocityZ = 0.1;
+
     nh_priv.getParam("UseKalmanFilter", UseKalmanFilter);
     nh_priv.getParam("MinLinearVelocityX", MinLinearVelocityX);
     nh_priv.getParam("MinAngularVelocityZ", MinAngularVelocityZ);
@@ -27,10 +29,11 @@ int main(int argc, char *argv[])
     ROS_INFO_STREAM("CommandVelocityCorrection Start");
 
     while (ros::ok())
-    {
+    {   
         // publish the corrected velocity values
         CommandVelocityRestrictPublisher.publish(CommandVelocityRestrictor.CommandVelocityRestrict);
 
+        ROS_INFO_STREAM_ONCE("Publish Correct Velocity");
         // spin once to process any pending callbacks
         ros::spinOnce();
 

@@ -2,7 +2,7 @@
 <launch>
     <node pkg="subproject4" name="velocity_correction" type="velocity_correction" output="screen">
         <param name="UseKalmanFilter"       type="bool"         value="false"/>
-        <param name="MinLinearVelocityX"    type="double"       value="0.5"/>
+        <param name="MinLinearVelocityX"    type="double"       value="0.05"/>
         <param name="MinAngularVelocityZ"   type="double"       value="0.1"/>
     </node>
 </launch>
